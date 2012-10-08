@@ -1,0 +1,5 @@
+#ignore old svn metadata
+.svn/
+
+#ignore logs
+*.log
