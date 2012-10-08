@@ -3,11 +3,13 @@
  */
 
 var mongo = require('mongodb'),
-    Server = mongo.Server,
-    Db = mongo.Db;
+   
+var self = this;
 
-var server = new Server('localhost', 27017, {auto_reconnect: true});
-var db = new Db('GrannyDB',server);
+self.dbServer = new mongodb.Server(process.env.OPENSHIFT_NOSQL_DB_HOST, parseInt(process.env.OPENSHIFT_NOSQL_DB_PORT));
+self.db = new mongodb.Db(process.env.OPENSHIFT_APP_NAME, self.dbServer, {auto_reconnect: true});
+self.dbUser = process.env.OPENSHIFT_NOSQL_DB_USERNAME;
+self.dbPass = process.env.OPENSHIFT_NOSQL_DB_PASSWORD;
 
 exports.init = function() {
 
