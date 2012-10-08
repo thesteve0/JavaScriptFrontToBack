@@ -5,6 +5,8 @@ var http = require('http');
 var url = require('url');
 var router = require('./router.js');
 
+var self = this;
+
 exports.init = function(mapping){
     var onRequest = function(request, response) {
         var urlobj = url.parse(request.url);
