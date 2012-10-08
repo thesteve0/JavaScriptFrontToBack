@@ -6,8 +6,11 @@ var mongo = require('mongodb'),
     ObjectID = mongo.ObjectID,
     Db = mongo.Db;
 
-var server = new Server('localhost', 27017, {auto_reconnect: true});
-var db = new Db('GrannyDB',server);
+dbServer = new mongodb.Server(process.env.OPENSHIFT_NOSQL_DB_HOST, parseInt(process.env.OPENSHIFT_NOSQL_DB_PORT));
+db = new mongodb.Db(process.env.OPENSHIFT_APP_NAME, self.dbServer, {auto_reconnect: true});
+dbUser = process.env.OPENSHIFT_NOSQL_DB_USERNAME;
+dbPass = process.env.OPENSHIFT_NOSQL_DB_PASSWORD;
+
 
 var respond = function(response, data, err) {
     var responseObj = {data: data, error: err};
