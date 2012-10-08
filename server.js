@@ -28,7 +28,9 @@ exports.init = function(mapping){
 
     }
 
+    self.ipaddr = process.env.OPENSHIFT_INTERNAL_IP;
+    self.port = parseInt(process.env.OPENSHIFT_INTERNAL_PORT);
 
-    http.createServer(onRequest).listen(8080);
-    console.log('>> HTTP server up, listening on port 8080');
+    http.createServer(onRequest).listen(self.ipaddr, self.port);
+    console.log('%s: Granny Node server started on %s:%d ...', Date(Date.now()), self.ipaddr, self.port);
 };
