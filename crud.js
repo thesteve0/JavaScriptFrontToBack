@@ -5,7 +5,7 @@ var mongodb = require('mongodb'),
     ObjectID = mongodb.ObjectID;
 
 dbServer = new mongodb.Server(process.env.OPENSHIFT_NOSQL_DB_HOST, parseInt(process.env.OPENSHIFT_NOSQL_DB_PORT));
-db = new mongodb.Db(process.env.OPENSHIFT_APP_NAME, self.dbServer, {auto_reconnect: true});
+db = new mongodb.Db(process.env.OPENSHIFT_APP_NAME, dbServer, {auto_reconnect: true});
 dbUser = process.env.OPENSHIFT_NOSQL_DB_USERNAME;
 dbPass = process.env.OPENSHIFT_NOSQL_DB_PASSWORD;
 
