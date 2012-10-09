@@ -4,10 +4,10 @@
 var mongodb = require('mongodb'),
     ObjectID = mongodb.ObjectID;
 
-dbServer = new mongodb.Server(process.env.OPENSHIFT_NOSQL_DB_HOST, parseInt(process.env.OPENSHIFT_NOSQL_DB_PORT));
-db = new mongodb.Db(process.env.OPENSHIFT_APP_NAME, dbServer, {auto_reconnect: true});
-dbUser = process.env.OPENSHIFT_NOSQL_DB_USERNAME;
-dbPass = process.env.OPENSHIFT_NOSQL_DB_PASSWORD;
+var dbServer = new mongodb.Server(process.env.OPENSHIFT_NOSQL_DB_HOST, parseInt(process.env.OPENSHIFT_NOSQL_DB_PORT));
+var db = new mongodb.Db(process.env.OPENSHIFT_APP_NAME, dbServer, {auto_reconnect: true});
+var dbUser = process.env.OPENSHIFT_NOSQL_DB_USERNAME;
+var dbPass = process.env.OPENSHIFT_NOSQL_DB_PASSWORD;
 
 
 var respond = function(response, data, err) {
@@ -17,11 +17,22 @@ var respond = function(response, data, err) {
     response.end();
 };
 
+var db_open_and_authenticate = function(cb) {
+    db.open(function(err, db) {
+        if (!err) {
+            db.authenticate(dbUser, dbPass, cb);
+        }
+        else {
+            console.log('db open failed');
+        }
+    });
+};
+
 exports.getAddresses = function(response){
     // TODO query the collection and return the list of addresses
     // Since we're dealing with a relatively small amount of data,
     // use toArray().  If more data is involved, stream it!
-    db.open( function(err, db) {
+    db_open_and_authenticate( function(err, result) {
         if(!err) {
             db.collection('addresses', function(err, coll) {
                 if(!err) {
@@ -47,7 +58,7 @@ exports.getAddresses = function(response){
 exports.getAddress = function(response, data, pathparts){
     var theid = pathparts.length > 2 ? pathparts[2] : data.data;
     // TODO query the collection with an ID and return a single address entry
-    db.open( function(err, db) {
+    db_open_and_authenticate( function(err, result) {
         if(!err) {
             db.collection('addresses', function(err, coll) {
                 if(!err) {
@@ -70,7 +81,7 @@ exports.getAddress = function(response, data, pathparts){
 };
 
 exports.updateAddress = function(response, data){
-    db.open( function(err, db) {
+    db_open_and_authenticate( function(err, result) {
         if(!err) {
             db.collection('addresses', function(err, coll) {
                 if(!err) {
@@ -93,7 +104,7 @@ exports.updateAddress = function(response, data){
 
 exports.createAddress = function(response, newEntry){
     // TODO insert a new address into the collection
-    db.open( function(err, db) {
+    db_open_and_authenticate( function(err, result) {
         if(!err) {
             db.collection('addresses', function(err, coll) {
                 if(!err) {
@@ -116,7 +127,7 @@ exports.createAddress = function(response, newEntry){
 
 exports.deleteAddress = function(response, data){
     //TODO delete a specified address from the collection
-    db.open( function(err, db) {
+    db_open_and_authenticate( function(err, result) {
         if(!err) {
             db.collection('addresses', function(err, coll) {
                 if(!err) {
