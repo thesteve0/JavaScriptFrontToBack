@@ -10,7 +10,7 @@
   ],
   "author": {
     "name": "OpenShift",
-    "email": "spousty@redhat.com",
+    "email": "ramr@redhat.com",
     "url":  "http://openshift.redhat.com/"
   },
   "homepage": "http://openshift.redhat.com/",
@@ -24,7 +24,10 @@
     "npm": ">= 1.0.0"
   },
 
-  "scripts": { "start": "node app.js" },
+  "scripts": {
+    "start": "node app.js"
+  },
+
   "dependencies": {
   	  
   },

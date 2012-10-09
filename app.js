@@ -2,7 +2,7 @@
 // @jfreeman
 
 
-var mongodb = require('./db.js');
+var zdb = require('./db.js');
 var httpServer = require('./server.js');
 var requestMapping = require('./crud.js');
 
@@ -14,8 +14,7 @@ mapping["/address_POST"] = requestMapping.updateAddress;
 mapping["/address_PUT"] = requestMapping.createAddress;
 mapping["/address_DELETE"] = requestMapping.deleteAddress;
 
-mongodb.init();
+zdb.init();
 httpServer.init(mapping);
-
 
 
