@@ -16,6 +16,9 @@ exports.init = function() {
             if(!err){
             console.log('>>DB open');
             console.log('>>Dropping old addresses collection...');
+            
+            //testing
+            console.log(db.collectionsNames());
             // drop the collection if it exists
             db.dropCollection('addresses', function(err, result){
                 console.log('>> Collection dropped');
