@@ -1,10 +1,8 @@
 // handle specific ajax requests here
 // @jfreeman
 
-var mongo = require('mongodb'),
-    Server = mongo.Server,
-    ObjectID = mongo.ObjectID,
-    Db = mongo.Db;
+var mongodb = require('mongodb'),
+    ObjectID = mongodb.ObjectID;
 
 dbServer = new mongodb.Server(process.env.OPENSHIFT_NOSQL_DB_HOST, parseInt(process.env.OPENSHIFT_NOSQL_DB_PORT));
 db = new mongodb.Db(process.env.OPENSHIFT_APP_NAME, self.dbServer, {auto_reconnect: true});

@@ -2,7 +2,7 @@
     @jfreeman
  */
 
-var mongo = require('mongodb'),
+var mongodb = require('mongodb'),
 
 dbServer = new mongodb.Server(process.env.OPENSHIFT_NOSQL_DB_HOST, parseInt(process.env.OPENSHIFT_NOSQL_DB_PORT));
 db = new mongodb.Db(process.env.OPENSHIFT_APP_NAME, self.dbServer, {auto_reconnect: true});
