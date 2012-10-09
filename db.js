@@ -18,7 +18,10 @@ exports.init = function() {
             console.log('>>Dropping old addresses collection...');
             
             //testing
-            console.log(db.collectionsNames());
+            db.collectionsNames(function(err, items){
+            		console.log( items.length);
+            });
+            
             // drop the collection if it exists
             db.dropCollection('addresses', function(err, result){
                 console.log('>> Collection dropped');
