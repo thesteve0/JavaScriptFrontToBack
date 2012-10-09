@@ -11,7 +11,7 @@ console.log("trying to get stuff running")
 
 exports.init = function(mapping){
     var onRequest = function(request, response) {
-console.log("Inside a request");
+        console.log("Inside a request");
         var urlobj = url.parse(request.url);
         var path = urlobj.pathname;
         var content;
@@ -31,12 +31,14 @@ console.log("Inside a request");
             content = router.route(mapping, path, response, postData, request.method);
         });
 
-    }
+    };
 
-console.log("before making the server");
+    console.log("before making the server");
     self.ipaddr = process.env.OPENSHIFT_INTERNAL_IP;
     self.port = parseInt(process.env.OPENSHIFT_INTERNAL_PORT);
-console.log("down the line");
-    http.createServer(onRequest).listen(self.ipaddr, self.port);
-    console.log('%s: Granny Node server started on %s:%d ...', Date(Date.now()), self.ipaddr, self.port);
+    console.log("down the line");
+    http.createServer(onRequest).listen(self.port, self.ipaddr, function() {
+       console.log('%s: Granny Node server started on %s:%d ...', Date(Date.now()),
+                   self.ipaddr, self.port);
+    });
 };
